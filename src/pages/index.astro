@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Chirag Files and Stationary';
+---
+
+<BaseLayout title={title}>
+  <section>
+    <p class="eyebrow">Welcome to</p>
+    <h1>{title}</h1>
+    <p class="intro">Quality file products for every need.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(body) {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #f6f1e9;
+    color: #1d3124;
+    font-family: Arial, sans-serif;
+  }
+
+  main {
+    width: min(90%, 760px);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: #bd5e26;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    line-height: 1.05;
+  }
+
+  .intro {
+    margin: 1.5rem 0 0;
+    color: #4f5d52;
+    font-size: 1.15rem;
+  }
+</style>

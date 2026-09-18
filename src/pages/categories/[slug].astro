@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { categories } from '../../data/categories';
+import '../../styles/category.css';
+
+export function getStaticPaths() {
+	return categories.map((category) => ({
+		params: { slug: category.slug },
+		props: { category },
+	}));
+}
+
+const { category } = Astro.props;
+---
+
+<BaseLayout title={`${category.name} | Chirag Files and Stationary`}>
+	<section class="category-heading">
+		<p class="eyebrow">Category</p>
+		<h1>{category.name}</h1>
+		<p>{category.description}</p>
+	</section>
+
+	<section class="products" aria-label={`${category.name} products`}>
+		{
+			category.products.map((product) => (
+				<article class="product-card">
+					<h2>{product.name}</h2>
+					<p>{product.description}</p>
+				</article>
+			))
+		}
+	</section>
+</BaseLayout>
