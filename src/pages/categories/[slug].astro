@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { categories } from '../../data/categories';
+import { filecategories } from '../../data/categories';
 import '../../styles/category.css';
 
 export function getStaticPaths() {
-	return categories.map((category) => ({
+	return filecategories.map((category) => ({
 		params: { slug: category.slug },
 		props: { category },
 	}));

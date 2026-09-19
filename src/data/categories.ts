@@ -1,3 +1,3 @@
-import type { Category } from './types';
-const categoryModules = import.meta.glob<Category>('./categories/*.ts', { eager: true, import: 'default' });
-export const categories = Object.values(categoryModules).sort((a, b) => a.name.localeCompare(b.name));
+import { FileCategory } from "./types";
+const filecategoryModules = import.meta.glob<FileCategory[]>('./categories/*.ts', { eager: true, import: 'default' });
+export const filecategories = Object.values(filecategoryModules).flat().sort((a, b) => a.name.localeCompare(b.name));
