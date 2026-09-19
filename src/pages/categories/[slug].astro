@@ -26,6 +26,12 @@ const { category } = Astro.props;
 				<article class="product-card">
 					<h2>{product.name}</h2>
 					<p>{product.description}</p>
+						<dl class="product-details">
+							<div><dt>Pages</dt><dd>{product.pagesperfile}</dd></div>
+							<div><dt>Size</dt><dd>{product.size}</dd></div>
+							<div><dt>Clip</dt><dd>{product.cliptype}</dd></div>
+							<div><dt>Material</dt><dd>{product.materialtype}</dd></div>
+						</dl>
 				</article>
 			))
 		}

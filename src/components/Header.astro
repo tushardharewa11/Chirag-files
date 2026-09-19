@@ -4,8 +4,14 @@ import '../styles/header.css';
 ---
 
 <header class="site-header">
-  <a href="/" class="brand" href="/">Chirag Files and Stationary</a>
-  <nav aria-label="Main navigation">
+  <div class="header-topline">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">
+      <img src="/images/navbutton.png" alt="Open navigation menu" width="40" height="40">
+      <span class="sr-only">Open navigation menu</span>
+    </button>
+    <a href="/" class="brand">Chirag Files & Stationary</a>
+  </div>
+  <nav id="main-navigation" aria-label="Main navigation">
     {
       filecategories.map((category) => (
         <a href={`/categories/${category.slug}`}>{category.name}</a>
@@ -13,3 +19,24 @@ import '../styles/header.css';
     }
   </nav>
 </header>
+
+<script>
+  const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navigation = document.querySelector<HTMLElement>('#main-navigation');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    menuToggle.querySelector('.sr-only')!.textContent = isOpen
+      ? 'Open navigation menu'
+      : 'Close navigation menu';
+    navigation?.classList.toggle('is-open', !isOpen);
+  });
+
+  navigation?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menuToggle?.setAttribute('aria-expanded', 'false');
+      navigation.classList.remove('is-open');
+    });
+  });
+</script>
