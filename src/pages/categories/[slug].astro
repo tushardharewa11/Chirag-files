@@ -22,18 +22,52 @@ const { category } = Astro.props;
 
 	<section class="products" aria-label={`${category.name} products`}>
 		{
-			category.products.map((product) => (
-				<article class="product-card">
-					<h2>{product.name}</h2>
-					<p>{product.description}</p>
-						<dl class="product-details">
-							<div><dt>Pages</dt><dd>{product.pagesperfile}</dd></div>
-							<div><dt>Size</dt><dd>{product.size}</dd></div>
-							<div><dt>Clip</dt><dd>{product.cliptype}</dd></div>
-							<div><dt>Material</dt><dd>{product.materialtype}</dd></div>
-						</dl>
-				</article>
-			))
+			category.products.map((product, index) => {
+				const productId = `product-${category.slug}-${index}`.replace(/[^a-zA-Z0-9-_]/g, '-');
+				return (
+					<>
+						<button class="product-card" type="button" data-dialog-id={productId}>
+							{product.product_images[0] ? (
+								<img class="product-card-image" style="background-color: #fff" src={product.product_images[0]} alt={`${product.name} product image`} loading="lazy" />
+							) : (
+								<div class="product-card-image product-image-placeholder" style="background-color: #fff" aria-hidden="true" >Image coming soon</div>
+							)}
+							<h2>{product.name}</h2>
+							<p>{product.description}</p>
+							<dl class="product-details">
+								<div><dt>Pages</dt><dd>{product.pagesperfile}</dd></div>
+								<div><dt>Size</dt><dd>{product.size}</dd></div>
+								<div><dt>Clip</dt><dd>{product.cliptype}</dd></div>
+								<div><dt>Material</dt><dd>{product.materialtype}</dd></div>
+							</dl>
+						</button>
+
+						<dialog class="product-dialog" id={productId}>
+							<div class="product-dialog-content">
+								<form method="dialog"><button class="dialog-close" aria-label="Close product gallery">&times;</button></form>
+								<div class="product-gallery">
+									{product.product_images.length > 0 ? product.product_images.map((image, imageIndex) => (
+										<img src={image} alt={`${product.name} view ${imageIndex + 1}`} loading={imageIndex === 0 ? 'eager' : 'lazy'} />
+									)) : (
+										<p class="gallery-empty">Add product images to this product's <code>product_images</code> list.</p>
+									)}
+								</div>
+							</div>
+						</dialog>
+					</>
+				);
+			})
 		}
 	</section>
 </BaseLayout>
+
+<script>
+	const galleryTriggers = document.querySelectorAll<HTMLButtonElement>('[data-dialog-id]');
+
+	galleryTriggers.forEach((trigger) => {
+		const dialog = document.getElementById(trigger.dataset.dialogId ?? '') as HTMLDialogElement | null;
+		if (!dialog) return;
+
+		trigger.addEventListener('click', () => dialog.showModal());
+	});
+</script>
